@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { useState } from 'react';
 
 const API = process.env.NEXT_PUBLIC_API_URL;
@@ -13,8 +13,8 @@ export default function ContactForm({ email }: { email: string }) {
     const f = new FormData(form);
     setState('sending');
     try {
-      if (!API) throw new Error('The message service is not connected.');
-      const res = await fetch(`${API}/contact`, {
+      const endpoint = API ? `${API}/contact` : '/api/contact';
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: f.get('name'), email: f.get('email'), message: f.get('message') }),
