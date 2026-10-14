@@ -1,0 +1,16 @@
+# Local Postgres + pgAdmin:  docker compose up -d
+# pgAdmin: http://localhost:5050  (login: admin@local.dev / admin)
+# Add server in pgAdmin -> Host: postgres, Port: 5432, User/Password: postgres, DB: portfolio
+services:
+  postgres:
+    image: postgres:16
+    environment: { POSTGRES_USER: postgres, POSTGRES_PASSWORD: postgres, POSTGRES_DB: portfolio }
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+  pgadmin:
+    image: dpage/pgadmin4
+    environment: { PGADMIN_DEFAULT_EMAIL: admin@local.dev, PGADMIN_DEFAULT_PASSWORD: admin }
+    ports: ["5050:80"]
+    depends_on: [postgres]
+volumes:
+  pgdata:
